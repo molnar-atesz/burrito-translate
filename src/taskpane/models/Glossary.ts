@@ -1,4 +1,4 @@
-import { IGlossary, IGlossaryItem, ISearchOptions } from "../types/glossary";
+import { IGlossary, IGlossaryItem, ISearchOptions } from "../@types/glossary";
 import { Language } from "./Language";
 
 export class Glossary implements IGlossary {

@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { IGlossary, IGlossaryStore, IGlossaryXmlSerializer } from "../types/glossary";
+import { IGlossary, IGlossaryStore, IGlossaryXmlSerializer } from "../@types/glossary";
 import { ID_SETTINGS_KEY } from "../utils/constants";
 
 /* global Office */

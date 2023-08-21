@@ -1,5 +1,5 @@
 import { Glossary } from "../models/Glossary";
-import { IGlossary, IGlossaryItem, IGlossaryXmlSerializer } from "../types/glossary";
+import { IGlossary, IGlossaryItem, IGlossaryXmlSerializer } from "../@types/glossary";
 import { LANGUAGES } from "./constants";
 
 export default class GlossaryXmlSerializer implements IGlossaryXmlSerializer {

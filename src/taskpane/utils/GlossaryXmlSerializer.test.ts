@@ -1,4 +1,4 @@
-import { IGlossary, IGlossaryItem, IGlossaryXmlSerializer } from "../types/glossary";
+import { IGlossary, IGlossaryItem, IGlossaryXmlSerializer } from "../@types/glossary";
 import { createEmptyGlossary, english, hungarian } from "../../__fixtures__/glossary";
 import { XMLNS } from "./constants";
 import GlossaryXmlSerializer from "./GlossaryXmlSerializer";

@@ -1,4 +1,4 @@
-import { IGlossary, IGlossaryItem } from "../types/glossary";
+import { IGlossary, IGlossaryItem } from "../@types/glossary";
 import { createEmptyGlossary, createGlossaryWithWords, english, hungarian } from "../../__fixtures__/glossary";
 import { Glossary } from "./Glossary";
 

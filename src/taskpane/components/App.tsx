@@ -1,32 +1,36 @@
 import * as React from "react";
-import { DefaultButton } from "@fluentui/react";
-import Header from "./Header";
-import HeroList, { HeroListItem } from "./HeroList";
 import Progress from "./Progress";
+import { IGlossary } from "../@types/glossary";
+import GlossaryXmlSerializer from "../utils/GlossaryXmlSerializer";
+import CustomXmlStorageService from "../services/CustomXmlStorageService";
+import { ID_SETTINGS_KEY, XMLNS } from "../utils/constants";
 
 export interface AppProps {
   title: string;
   isOfficeInitialized: boolean;
 }
 
+/* global Office */
+
 export const App: React.FC<AppProps> = ({ title, isOfficeInitialized }) => {
-  const [listItems, setListItems] = React.useState<Array<any>>([]);
+  const [glossary, setGlossary] = React.useState<IGlossary>();
 
   React.useEffect(() => {
     if (isOfficeInitialized) {
-      const heroes: HeroListItem[] = [
-        {
-          icon: "Airplane",
-          primaryText: "Help me baby",
-        },
-      ];
-      setListItems(heroes);
+      Office.context.document.settings.get(ID_SETTINGS_KEY);
+
+      const serializer = new GlossaryXmlSerializer(XMLNS);
+      const docStore = new CustomXmlStorageService(serializer);
+      docStore
+        .loadAsync()
+        .then((loadedGlossary) => {
+          setGlossary(loadedGlossary);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
     }
   }, [isOfficeInitialized]);
-
-  const click = () => {
-    console.log("Something happened");
-  };
 
   if (!isOfficeInitialized) {
     return (
@@ -39,17 +43,10 @@ export const App: React.FC<AppProps> = ({ title, isOfficeInitialized }) => {
   }
 
   return (
-    <div className="ms-welcome">
-      <Header logo={require("./../../../assets/logo-filled.png")} title={title} message="Welcome" />
-      <HeroList message="Discover what Office Add-ins can do for you today!" items={listItems}>
-        <p className="ms-font-l">
-          Modify the source files, then click <b>Run</b>.
-        </p>
-        <DefaultButton className="ms-welcome__action" iconProps={{ iconName: "ChevronRight" }} onClick={click}>
-          Run something
-        </DefaultButton>
-      </HeroList>
-    </div>
+    <>
+      <h1>Hello World</h1>
+      <div className="ms-welcome">{glossary && glossary.items.map((item) => <div key={item.key}>{item.key}</div>)}</div>
+    </>
   );
 };
 
