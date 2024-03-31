@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 import { MessageBarType } from "@fluentui/react";
 import { Language } from "../models/Language";
 

@@ -42,7 +42,6 @@ describe("Glossary", () => {
     test("should throw error on undefined parameter", () => {
       const glossary = createEmptyGlossary();
 
-      // @ts-ignore
       const act = () => glossary.addItem(undefined);
 
       expect(act).toThrow("Invalid argument: 'newItem' is required");
@@ -50,7 +49,7 @@ describe("Glossary", () => {
 
     test("should throw error if 'original' is empty string", () => {
       const glossary = createEmptyGlossary();
-      let item1: IGlossaryItem = { key: "1", original: "", translation: "dog", note: "no" };
+      const item1: IGlossaryItem = { key: "1", original: "", translation: "dog", note: "no" };
 
       const act = () => glossary.addItem(item1);
 
@@ -59,8 +58,8 @@ describe("Glossary", () => {
 
     test("should add word even if it is duplicated", () => {
       const glossary = createEmptyGlossary();
-      let item1: IGlossaryItem = { key: "50", original: "husk", translation: "dog", note: "no" };
-      let item2: IGlossaryItem = { key: "51", original: "husk", translation: "dog", note: "no" };
+      const item1: IGlossaryItem = { key: "50", original: "husk", translation: "dog", note: "no" };
+      const item2: IGlossaryItem = { key: "51", original: "husk", translation: "dog", note: "no" };
 
       glossary.addItem(item1);
       glossary.addItem(item2);
@@ -74,7 +73,7 @@ describe("Glossary", () => {
     test("should change translation and note of passed word", () => {
       const glossary = createEmptyGlossary();
       const word = "husk";
-      let item: IGlossaryItem = {
+      const item: IGlossaryItem = {
         key: "1",
         original: word,
         translation: "dog",
@@ -94,7 +93,6 @@ describe("Glossary", () => {
     test("should throw error on not existing word", () => {
       const glossary = createEmptyGlossary();
 
-      // @ts-ignore
       const act = () => glossary.editItem("not-existing-word", "translation", null);
 
       expect(act).toThrow("Invalid argument: 'not-existing-word' is not an existing word");
@@ -106,7 +104,6 @@ describe("Glossary", () => {
       const item: IGlossaryItem = { key: "1", original: word, translation: "dog", note: "no" };
       glossary.addItem(item);
 
-      // @ts-ignore
       const act = () => glossary.editItem(word, undefined);
 
       expect(act).toThrow("Invalid argument: 'newTranslation' is required");
@@ -145,7 +142,7 @@ describe("Glossary", () => {
 
     test("should throw error on undefined parameter", () => {
       const glossary = createEmptyGlossary();
-      // @ts-ignore
+
       const act = () => glossary.addRange(undefined);
 
       expect(act).toThrow("Invalid argument: 'newItems' is required");

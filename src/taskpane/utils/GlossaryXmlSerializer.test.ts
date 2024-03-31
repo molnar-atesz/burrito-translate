@@ -19,8 +19,6 @@ describe("serialize", () => {
   const nowStubDate = new Date(nowStubValue);
 
   beforeAll(() => {
-    // @ts-ignore
-    // eslint-disable-next-line no-undef
     global.Date = class extends Date {
       constructor(date: string) {
         if (date) {
@@ -34,7 +32,6 @@ describe("serialize", () => {
   });
 
   afterAll(() => {
-    // eslint-disable-next-line no-undef
     global.Date = realDate;
   });
 
@@ -169,7 +166,7 @@ describe("serialize", () => {
 });
 
 describe("deserialize", () => {
-  const CUSTOM_XML: string =
+  const CUSTOM_XML =
     "<burritoMemory xmlns='http://burrito.org/translate'><source>en</source><target>hu</target><created>2021-02-03T22:27:58.801Z</created><items><item original='the' translation='az' note='megj' /><item original='one' translation='egy' /></items></burritoMemory>";
 
   test("should set the source and target language properly", () => {

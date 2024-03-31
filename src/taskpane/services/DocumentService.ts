@@ -2,8 +2,6 @@
 /* global OfficeExtension */
 
 export default class DocumentService {
-  constructor() { }
-
   public async insertText(text: string): Promise<boolean> {
     await Word.run(async (context: Word.RequestContext) => {
       const doc = context.document;

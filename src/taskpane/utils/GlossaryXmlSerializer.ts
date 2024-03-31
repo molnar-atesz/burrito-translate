@@ -61,7 +61,7 @@ export default class GlossaryXmlSerializer implements IGlossaryXmlSerializer {
         key: (i + 1).toString(),
         original: itemNode.getAttribute("original")!,
         translation: itemNode.getAttribute("translation")!,
-        note: note ?? "",
+        note: note,
       };
       glossary.addItem(newItem);
     }

@@ -24,20 +24,19 @@ const mockData = {
         return this.range;
       },
     },
-  },
+  } as any as Word.RequestContext,
   // Mock the Word.InsertLocation enum.
   InsertLocation: {
     replace: "Replace",
   },
   // Mock the Word.run method.
-  run: async function (callback: (context: any) => void) {
+  run: async function (callback: (context: Word.RequestContext) => void) {
     await callback(this.context);
   },
 };
 const officeMock = new OfficeMockObject(mockData, OfficeApp.Word);
-// @ts-ignore
+
 global.Office = officeMock;
-// @ts-ignore
 global.Word = officeMock;
 
 describe("DocumentService", () => {

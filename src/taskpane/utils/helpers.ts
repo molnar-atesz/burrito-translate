@@ -13,7 +13,7 @@ export function copyAndSortItems<IGlossaryItem>(
 }
 
 export function getLoweredPropValue(item: any, prop: any): string {
-  let value = item[prop];
+  const value = item[prop];
   let valueLower = "";
   if (typeof value === "string") {
     valueLower = value.toLocaleLowerCase();
