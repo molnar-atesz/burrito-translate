@@ -1,6 +1,7 @@
 import { IGlossary, IGlossaryItem } from "../@types/glossary";
 import { createEmptyGlossary, createGlossaryWithWords, english, hungarian } from "../../__fixtures__/glossary";
 import { Glossary } from "./Glossary";
+import { describe, beforeEach, test, expect } from "vitest";
 
 describe("Glossary", () => {
   describe("constructor", () => {
@@ -41,6 +42,7 @@ describe("Glossary", () => {
     test("should throw error on undefined parameter", () => {
       const glossary = createEmptyGlossary();
 
+      // @ts-ignore
       const act = () => glossary.addItem(undefined);
 
       expect(act).toThrow("Invalid argument: 'newItem' is required");
@@ -92,6 +94,7 @@ describe("Glossary", () => {
     test("should throw error on not existing word", () => {
       const glossary = createEmptyGlossary();
 
+      // @ts-ignore
       const act = () => glossary.editItem("not-existing-word", "translation", null);
 
       expect(act).toThrow("Invalid argument: 'not-existing-word' is not an existing word");
@@ -103,6 +106,7 @@ describe("Glossary", () => {
       const item: IGlossaryItem = { key: "1", original: word, translation: "dog", note: "no" };
       glossary.addItem(item);
 
+      // @ts-ignore
       const act = () => glossary.editItem(word, undefined);
 
       expect(act).toThrow("Invalid argument: 'newTranslation' is required");
@@ -141,7 +145,7 @@ describe("Glossary", () => {
 
     test("should throw error on undefined parameter", () => {
       const glossary = createEmptyGlossary();
-
+      // @ts-ignore
       const act = () => glossary.addRange(undefined);
 
       expect(act).toThrow("Invalid argument: 'newItems' is required");

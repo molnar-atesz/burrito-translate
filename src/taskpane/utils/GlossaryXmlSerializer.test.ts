@@ -2,6 +2,7 @@ import { IGlossary, IGlossaryItem, IGlossaryXmlSerializer } from "../@types/glos
 import { createEmptyGlossary, english, hungarian } from "../../__fixtures__/glossary";
 import { XMLNS } from "./constants";
 import GlossaryXmlSerializer from "./GlossaryXmlSerializer";
+import { describe, beforeAll, afterAll, test, expect } from "vitest";
 
 describe("GlossaryXmlSerializer", () => {
   test("should not be able to create without xmlns", () => {
@@ -19,8 +20,9 @@ describe("serialize", () => {
 
   beforeAll(() => {
     // @ts-ignore
+    // eslint-disable-next-line no-undef
     global.Date = class extends Date {
-      constructor(date) {
+      constructor(date: string) {
         if (date) {
           super(date);
           return new realDate(date);
@@ -32,6 +34,7 @@ describe("serialize", () => {
   });
 
   afterAll(() => {
+    // eslint-disable-next-line no-undef
     global.Date = realDate;
   });
 

@@ -1,5 +1,5 @@
 /**
- * @jest-environment node
+ * @vitest-environment node
  */
 
 /* global Word */
@@ -7,6 +7,7 @@
 import { OfficeApp } from "office-addin-manifest";
 import { OfficeMockObject } from "office-addin-mock";
 import DocumentService from "./DocumentService";
+import { describe, test, expect } from "vitest";
 
 const mockData = {
   context: {
@@ -29,7 +30,7 @@ const mockData = {
     replace: "Replace",
   },
   // Mock the Word.run method.
-  run: async function (callback) {
+  run: async function (callback: (context: any) => void) {
     await callback(this.context);
   },
 };

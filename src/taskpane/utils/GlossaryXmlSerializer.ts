@@ -33,7 +33,7 @@ export default class GlossaryXmlSerializer implements IGlossaryXmlSerializer {
     const xmlDoc = this.parseXML(xml);
     const { source, target, created } = this.deserializeBasicProps(xmlDoc);
 
-    let glossary = new Glossary(source, target, created);
+    const glossary = new Glossary(source, target, created);
     this.deserializeItems(glossary, xmlDoc);
 
     return glossary;
@@ -59,9 +59,9 @@ export default class GlossaryXmlSerializer implements IGlossaryXmlSerializer {
 
       const newItem: IGlossaryItem = {
         key: (i + 1).toString(),
-        original: itemNode.getAttribute("original"),
-        translation: itemNode.getAttribute("translation"),
-        note: note,
+        original: itemNode.getAttribute("original")!,
+        translation: itemNode.getAttribute("translation")!,
+        note: note ?? "",
       };
       glossary.addItem(newItem);
     }
@@ -80,7 +80,8 @@ export default class GlossaryXmlSerializer implements IGlossaryXmlSerializer {
   }
 
   private escapeXml = (text: string): string => {
-    let that = this;
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
+    const that = this;
     return text.replace(/[<>&"']/g, function (ch) {
       return that.XML_CHAR_MAP[ch];
     });

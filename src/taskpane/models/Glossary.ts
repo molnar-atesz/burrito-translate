@@ -39,7 +39,7 @@ export class Glossary implements IGlossary {
   }
 
   public deleteItem(word: string) {
-    let delIndex = this._items.findIndex((item) => item.original === word);
+    const delIndex = this._items.findIndex((item) => item.original === word);
     if (delIndex === -1) {
       throw new Error(`Not found: '${word}'`);
     }
@@ -67,7 +67,7 @@ export class Glossary implements IGlossary {
     newItems.forEach((newItem) => {
       try {
         this.addItem(newItem);
-      } catch (error) {
+      } catch (error: any) {
         console.info(error.message);
       }
     });
@@ -78,7 +78,7 @@ export class Glossary implements IGlossary {
       throw new Error("Invalid argument: 'newTranslation' is required");
     }
 
-    let item = this._items.find((it) => it.original === word);
+    const item = this._items.find((it) => it.original === word);
     if (!item) {
       throw new Error(`Invalid argument: '${word}' is not an existing word`);
     }
@@ -97,9 +97,9 @@ export class Glossary implements IGlossary {
       wholeWord: searchOptions?.wholeWord ?? false,
     };
     const result = this._items.filter((item) => {
-      let flags = searchOptions?.caseSensitive ? "gm" : "gmi";
-      let pattern = searchOptions?.wholeWord ? `\\b${keyword}\\b` : keyword;
-      let regex = new RegExp(pattern, flags);
+      const flags = searchOptions?.caseSensitive ? "gm" : "gmi";
+      const pattern = searchOptions?.wholeWord ? `\\b${keyword}\\b` : keyword;
+      const regex = new RegExp(pattern, flags);
 
       return regex.test(item.original) || regex.test(item.translation);
     });

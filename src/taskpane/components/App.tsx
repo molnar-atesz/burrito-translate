@@ -1,4 +1,4 @@
-import * as React from "react";
+import { useEffect, useState, FC } from "react";
 import { IGlossary } from "../@types/glossary";
 import GlossaryXmlSerializer from "../utils/GlossaryXmlSerializer";
 import CustomXmlStorageService from "../services/CustomXmlStorageService";
@@ -11,10 +11,10 @@ export interface AppProps {
 
 /* global console, Office  */
 
-export const App: React.FC<AppProps> = ({ title, isOfficeInitialized }) => {
-  const [glossary, setGlossary] = React.useState<IGlossary>();
+export const App: FC<AppProps> = ({ title, isOfficeInitialized }) => {
+  const [glossary, setGlossary] = useState<IGlossary>();
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (isOfficeInitialized) {
       Office.context.document.settings.get(ID_SETTINGS_KEY);
 

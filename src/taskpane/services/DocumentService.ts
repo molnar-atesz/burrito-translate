@@ -1,11 +1,11 @@
-/* global Word */
+/* global console, Word */
 /* global OfficeExtension */
 
 export default class DocumentService {
-  constructor() {}
+  constructor() { }
 
   public async insertText(text: string): Promise<boolean> {
-    await Word.run(async (context) => {
+    await Word.run(async (context: Word.RequestContext) => {
       const doc = context.document;
       const selectedRange = doc.getSelection();
       selectedRange.insertText(text, Word.InsertLocation.replace);
