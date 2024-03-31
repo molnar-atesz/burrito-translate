@@ -21,7 +21,10 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
     "types": [
-      "vitest/globals"
+      "@types/office-js",
+      "@types/office-runtime",
+      "vitest/globals",
+      "vitest/jsdom"
     ]
   },
   "include": [

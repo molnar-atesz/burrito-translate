@@ -1,8 +1,9 @@
 {
-    "eslint.validate": [
-      "javascript",
-      "javascriptreact",
-      "typescript"
-    ]
-  }
-  
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript"
+  ],
+  "vitest.commandLine": "npx vitest",
+  "vitest.enable": true
+}
