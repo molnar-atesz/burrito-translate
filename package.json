@@ -22,6 +22,7 @@
     "start:desktop": "office-addin-debugging start src/manifest.xml desktop",
     "start:web": "office-addin-debugging start src/manifest.xml web",
     "stop": "office-addin-debugging stop src/manifest.xml",
+    "test": "vitest",
     "validate": "office-addin-manifest validate src/manifest.xml"
   },
   "dependencies": {
@@ -30,17 +31,20 @@
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^6.4.2",
+    "@testing-library/react": "^14.2.2",
     "@types/office-js": "^1.0.256",
     "@types/office-runtime": "^1.0.23",
     "@types/react": "^18.0.28",
     "@types/react-dom": "^18.0.11",
     "@typescript-eslint/eslint-plugin": "^5.57.1",
     "@typescript-eslint/parser": "^5.57.1",
-    "@vitejs/plugin-react-swc": "^3.0.0",
+    "@vitejs/plugin-react-swc": "^3.6.0",
     "eslint": "^8.38.0",
     "eslint-plugin-office-addins": "^2.1.5",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.3.4",
+    "jsdom": "^24.0.0",
     "office-addin-cli": "^1.5.5",
     "office-addin-debugging": "^5.0.5",
     "office-addin-dev-certs": "^1.11.3",
@@ -51,7 +55,8 @@
     "typescript": "^5.0.2",
     "vite": "^5.2.7",
     "vite-plugin-eslint": "^1.8.1",
-    "vite-plugin-office-addin": "^2.1.0"
+    "vite-plugin-office-addin": "^2.1.0",
+    "vitest": "^1.4.0"
   },
   "prettier": "office-addin-prettier-config"
 }
