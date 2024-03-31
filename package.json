@@ -49,9 +49,9 @@
     "office-addin-mock": "^2.3.18",
     "office-addin-prettier-config": "^1.2.0",
     "typescript": "^5.0.2",
-    "vite": "^4.3.2",
+    "vite": "^5.2.7",
     "vite-plugin-eslint": "^1.8.1",
-    "vite-plugin-office-addin": "^1.0.0"
+    "vite-plugin-office-addin": "^2.1.0"
   },
   "prettier": "office-addin-prettier-config"
 }

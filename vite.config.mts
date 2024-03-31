@@ -3,7 +3,7 @@ import react from "@vitejs/plugin-react-swc";
 import officeAddin from "vite-plugin-office-addin";
 import eslint from "vite-plugin-eslint";
 
-const devCerts = require("office-addin-dev-certs");
+import devCerts from "office-addin-dev-certs";
 
 async function getHttpsOptions() {
   const httpsOptions = await devCerts.getHttpsServerOptions();
