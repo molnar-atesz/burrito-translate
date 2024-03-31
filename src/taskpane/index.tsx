@@ -1,26 +1,24 @@
+import React from "react";
 import App from "./components/App";
-import { AppContainer } from "react-hot-loader";
 import { initializeIcons } from "@fluentui/font-icons-mdl2";
-import { ThemeProvider } from "@fluentui/react";
-import * as React from "react";
-import * as ReactDOM from "react-dom";
+import { ThemeProvider } from "@fluentui/react/lib/Theme";
+import { createRoot } from "react-dom/client";
 
-/* global Office */
+/* global document, Office */
 
 initializeIcons();
 
 let isOfficeInitialized = false;
 
-const title = "Contoso Task Pane Add-in";
+const title = "Burrito translate";
 
-const render = (Component) => {
-  ReactDOM.render(
-    <AppContainer>
+const render = (Component: typeof App) => {
+  createRoot(document.getElementById("container") as HTMLElement).render(
+    <React.StrictMode>
       <ThemeProvider>
         <Component title={title} isOfficeInitialized={isOfficeInitialized} />
       </ThemeProvider>
-    </AppContainer>,
-    document.getElementById("container")
+    </React.StrictMode>
   );
 };
 
@@ -29,10 +27,3 @@ Office.onReady(() => {
   isOfficeInitialized = true;
   render(App);
 });
-
-if ((module as any).hot) {
-  (module as any).hot.accept("./components/App", () => {
-    const NextApp = require("./components/App").default;
-    render(NextApp);
-  });
-}

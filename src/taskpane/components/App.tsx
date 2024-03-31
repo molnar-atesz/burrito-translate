@@ -1,5 +1,4 @@
 import * as React from "react";
-import Progress from "./Progress";
 import { IGlossary } from "../@types/glossary";
 import GlossaryXmlSerializer from "../utils/GlossaryXmlSerializer";
 import CustomXmlStorageService from "../services/CustomXmlStorageService";
@@ -10,7 +9,7 @@ export interface AppProps {
   isOfficeInitialized: boolean;
 }
 
-/* global Office */
+/* global console, Office  */
 
 export const App: React.FC<AppProps> = ({ title, isOfficeInitialized }) => {
   const [glossary, setGlossary] = React.useState<IGlossary>();
@@ -33,18 +32,12 @@ export const App: React.FC<AppProps> = ({ title, isOfficeInitialized }) => {
   }, [isOfficeInitialized]);
 
   if (!isOfficeInitialized) {
-    return (
-      <Progress
-        title={title}
-        logo={require("./../../../assets/logo-filled.png")}
-        message="Please sideload your addin to see app body."
-      />
-    );
+    return <>Please sideload your addin to see app body.</>;
   }
 
   return (
     <>
-      <h1>Hello World</h1>
+      <h1>{title}</h1>
       <div className="ms-welcome">{glossary && glossary.items.map((item) => <div key={item.key}>{item.key}</div>)}</div>
     </>
   );
