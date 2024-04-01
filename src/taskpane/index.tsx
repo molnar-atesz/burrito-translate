@@ -1,12 +1,10 @@
 import React from "react";
 import App from "./components/App";
-import { initializeIcons } from "@fluentui/font-icons-mdl2";
-import { ThemeProvider } from "@fluentui/react/lib/Theme";
 import { createRoot } from "react-dom/client";
+import { FluentProvider, webLightTheme } from "@fluentui/react-components";
+import { GlossaryProvider } from "./context/glossaryContext";
 
 /* global document, Office */
-
-initializeIcons();
 
 let isOfficeInitialized = false;
 
@@ -15,9 +13,11 @@ const title = "Burrito translate";
 const render = (Component: typeof App) => {
   createRoot(document.getElementById("container") as HTMLElement).render(
     <React.StrictMode>
-      <ThemeProvider>
-        <Component title={title} isOfficeInitialized={isOfficeInitialized} />
-      </ThemeProvider>
+      <FluentProvider theme={webLightTheme}>
+        <GlossaryProvider>
+          <Component title={title} isOfficeInitialized={isOfficeInitialized} />
+        </GlossaryProvider>
+      </FluentProvider>
     </React.StrictMode>
   );
 };

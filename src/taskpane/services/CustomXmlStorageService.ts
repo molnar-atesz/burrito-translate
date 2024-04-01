@@ -13,13 +13,12 @@ export default class CustomXmlStorageService implements IGlossaryStore {
 
   public saveAsync(glossary: IGlossary): Promise<string> {
     const glossaryXML = this.serializer.serialize(glossary);
-    const doc = Office.context.document;
 
     return new Promise<string>((resolve, _) => {
       this.clearAsync().then(() => {
-        doc.customXmlParts.addAsync(glossaryXML, (xmlPart) => {
-          doc.settings.set(ID_SETTINGS_KEY, xmlPart.value.id);
-          doc.settings.saveAsync(() => {
+        Office.context.document.customXmlParts.addAsync(glossaryXML, (xmlPart) => {
+          Office.context.document.settings.set(ID_SETTINGS_KEY, xmlPart.value.id);
+          Office.context.document.settings.saveAsync(() => {
             resolve("Success");
           });
         });
