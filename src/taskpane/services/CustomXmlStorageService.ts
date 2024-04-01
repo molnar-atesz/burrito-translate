@@ -49,7 +49,7 @@ export default class CustomXmlStorageService implements IGlossaryStore {
     return new Promise<void>((resolve, __) => {
       const id = Office.context.document.settings.get(ID_SETTINGS_KEY);
       if (id) {
-        Office.context.document.customXmlParts.getByIdAsync(id, (prevPart) => {
+        Office.context.document.customXmlParts.getByIdAsync(id, (prevPart: any) => {
           if (!prevPart.error) {
             prevPart.value.deleteAsync(() => {
               resolve();

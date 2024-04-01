@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useReducer } from "react";
-import { IGlossary } from "../@types/glossary";
+import { IGlossary, INotification } from "../@types/glossary";
 import { Glossary, Language } from "../models";
 import { XMLNS } from "../utils/constants";
 import GlossaryXmlSerializer from "../utils/GlossaryXmlSerializer";
@@ -15,7 +15,7 @@ type Action =
 type Dispatch = (action: Action) => void;
 type State = {
   glossary?: IGlossary;
-  message?: string;
+  notification?: INotification;
 };
 type GlossaryProviderProps = { children: React.ReactNode };
 
@@ -29,13 +29,25 @@ const glossaryReducer = (state: State, action: Action) => {
       return state.glossary ? { ...state } : { glossary: new Glossary(action.payload.source, action.payload.target) };
     }
     case "fetchStarted": {
-      return { ...state, message: "Glossary is loading" };
+      const notification: INotification = {
+        message: "Glossary is loading",
+        intent: "info",
+      };
+      return { ...state, notification };
     }
     case "fetchFinished": {
-      return { glossary: action.glossary };
+      const notification: INotification = {
+        message: "Glossary created",
+        intent: "success",
+      };
+      return { glossary: action.glossary, notification };
     }
     case "fetchFailed": {
-      return { ...state, message: action.error.message };
+      const notification: INotification = {
+        message: `Something went wrong: ${action.error.message}`,
+        intent: "error",
+      };
+      return { ...state, notification };
     }
     default: {
       throw new Error(`Unhandled action type: ${action.type}`);
@@ -47,10 +59,8 @@ const tryFetchGlossary = async (dispatch: Dispatch) => {
   dispatch({ type: "fetchStarted" });
   try {
     const glossary = await docStore.loadAsync();
-    console.log(glossary);
     dispatch({ type: "fetchFinished", glossary });
   } catch (error: any) {
-    console.log("error", error);
     dispatch({ type: "fetchFailed", error });
   }
 };

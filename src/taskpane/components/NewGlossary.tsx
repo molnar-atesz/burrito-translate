@@ -1,21 +1,10 @@
-import React, { useState, useMemo } from "react";
-import { Button, Dropdown, DropdownProps, makeStyles, Option, shorthands, useId } from "@fluentui/react-components";
+import { useState } from "react";
+import { Button, Dropdown, DropdownProps, Option, useId } from "@fluentui/react-components";
 
 import useStackStyles from "../common/Layout";
 import { LANGUAGES } from "../utils/constants";
 import { Language } from "../models";
 import { useGlossary } from "../context/glossaryContext";
-
-const useStyles = makeStyles({
-  root: {
-    // Stack the label above the field with a gap
-    display: "grid",
-    gridTemplateRows: "repeat(1fr)",
-    justifyItems: "start",
-    ...shorthands.gap("2px"),
-    maxWidth: "400px",
-  },
-});
 
 const NewGlossary = (props: Partial<DropdownProps>) => {
   const { dispatch } = useGlossary();
@@ -25,14 +14,13 @@ const NewGlossary = (props: Partial<DropdownProps>) => {
   const targetId = useId("target-selector");
 
   const stackStyles = useStackStyles();
-  const styles = useStyles();
 
-  const onSourceSelect: (typeof props)["onOptionSelect"] = (ev, data) => {
+  const onSourceSelect: (typeof props)["onOptionSelect"] = (_, data) => {
     const lang = LANGUAGES.find((l) => l.name == data.optionValue);
     if (lang) setSource(lang);
   };
 
-  const onTargetSelect: (typeof props)["onOptionSelect"] = (ev, data) => {
+  const onTargetSelect: (typeof props)["onOptionSelect"] = (_, data) => {
     const lang = LANGUAGES.find((l) => l.name == data.optionValue);
     if (lang) setTarget(lang);
   };

@@ -8,14 +8,12 @@ import { GlossaryProvider } from "./context/glossaryContext";
 
 let isOfficeInitialized = false;
 
-const title = "Burrito translate";
-
 const render = (Component: typeof App) => {
   createRoot(document.getElementById("container") as HTMLElement).render(
     <React.StrictMode>
       <FluentProvider theme={webLightTheme}>
         <GlossaryProvider>
-          <Component title={title} isOfficeInitialized={isOfficeInitialized} />
+          <Component isOfficeInitialized={isOfficeInitialized} />
         </GlossaryProvider>
       </FluentProvider>
     </React.StrictMode>

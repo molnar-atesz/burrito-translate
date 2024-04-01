@@ -4,7 +4,7 @@ import { LANGUAGES } from "./constants";
 
 export default class GlossaryXmlSerializer implements IGlossaryXmlSerializer {
   private readonly XMLNS: string;
-  private readonly XML_CHAR_MAP = {
+  private readonly XML_CHAR_MAP: { [key: string]: string } = {
     "<": "&lt;",
     ">": "&gt;",
     "&": "&amp;",
@@ -82,7 +82,7 @@ export default class GlossaryXmlSerializer implements IGlossaryXmlSerializer {
   private escapeXml = (text: string): string => {
     // eslint-disable-next-line @typescript-eslint/no-this-alias
     const that = this;
-    return text.replace(/[<>&"']/g, function (ch) {
+    return text.replace(/[<>&"']/g, function (ch: string) {
       return that.XML_CHAR_MAP[ch];
     });
   };

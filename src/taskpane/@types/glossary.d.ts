@@ -1,16 +1,15 @@
-import { MessageBarType } from "@fluentui/react";
 import { Language } from "../models/Language";
 
 export interface INotification {
   message: string;
-  messageBarType: MessageBarType;
+  intent: "info" | "warning" | "error" | "success";
 }
 
 export interface IGlossaryItem {
   key?: string;
   original: string;
   translation: string;
-  note?: string;
+  note?: string | null;
 }
 
 export interface ISearchOptions {

@@ -1,21 +1,20 @@
-import React, { useEffect, FC } from "react";
+import { useEffect, FC } from "react";
 
-import { mergeClasses } from "@fluentui/react-components";
+import { MessageBar, MessageBarBody, MessageBarTitle, mergeClasses } from "@fluentui/react-components";
 
 import useStackStyles from "../common/Layout";
 import NewGlossary from "./NewGlossary";
 import { useGlossary, tryFetchGlossary } from "../context/glossaryContext";
 
 export interface AppProps {
-  title: string;
   isOfficeInitialized: boolean;
 }
 
 /* global console, Office  */
 
-export const App: FC<AppProps> = ({ title, isOfficeInitialized }) => {
+export const App: FC<AppProps> = ({ isOfficeInitialized }) => {
   const {
-    state: { glossary },
+    state: { glossary, notification },
     dispatch,
   } = useGlossary();
   const stackClasses = useStackStyles();
@@ -63,7 +62,16 @@ export const App: FC<AppProps> = ({ title, isOfficeInitialized }) => {
         </div>
       )}
 
-      <div className={stackClasses.stack}>Notification area</div>
+      <div className={stackClasses.stack}>
+        {notification && (
+          <MessageBar intent={notification.intent}>
+            <MessageBarBody>
+              <MessageBarTitle>Descriptive title</MessageBarTitle>
+              {notification.message}
+            </MessageBarBody>
+          </MessageBar>
+        )}
+      </div>
     </div>
   );
 };
