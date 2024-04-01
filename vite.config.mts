@@ -14,7 +14,7 @@ async function getHttpsOptions() {
 export default defineConfig(async ({ mode }) => ({
   plugins: [react(), eslint(), officeAddin({
     devUrl: "https://localhost:3000",
-    prodUrl: "https://molnar-atesz.github.io/burrito-translate/" // CHANGE THIS TO YOUR PRODUCTION DEPLOYMENT LOCATION
+    prodUrl: "http://localhost:4173" // CHANGE THIS TO YOUR PRODUCTION DEPLOYMENT LOCATION
   })],
   root: "src",
   build: {

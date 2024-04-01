@@ -20,8 +20,10 @@
     "preview": "vite preview",
     "start": "office-addin-debugging start src/manifest.xml",
     "start:desktop": "office-addin-debugging start src/manifest.xml desktop",
+    "start:desktop:preview": "office-addin-debugging start dist/manifest.xml desktop",
     "start:web": "office-addin-debugging start src/manifest.xml web",
     "stop": "office-addin-debugging stop src/manifest.xml",
+    "stop:preview": "office-addin-debugging stop dist/manifest.xml",
     "test": "vitest",
     "validate": "office-addin-manifest validate src/manifest.xml"
   },
