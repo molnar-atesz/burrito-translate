@@ -30,16 +30,16 @@ export default class CustomXmlStorageService implements IGlossaryStore {
     return new Promise<IGlossary>((resolve, reject) => {
       const id = Office.context.document.settings.get(ID_SETTINGS_KEY);
       if (!id) {
-        reject("No saved glossary found");
+        return reject("No saved glossary found");
       }
 
       this.getByIdAsync(id).then((asyncResult) => {
         if (!asyncResult.value) {
-          reject("Previously saved glossary not found");
+          return reject("Previously saved glossary not found");
         }
         this.getXmlAsync(asyncResult.value).then((xml) => {
           const glossary = this.serializer.deserialize(xml);
-          resolve(glossary);
+          return resolve(glossary);
         });
       });
     });

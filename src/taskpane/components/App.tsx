@@ -1,14 +1,10 @@
-import React, { useEffect, useState, FC } from "react";
+import React, { useEffect, FC } from "react";
 
 import { mergeClasses } from "@fluentui/react-components";
 
-import { IGlossary } from "../@types/glossary";
-import GlossaryXmlSerializer from "../utils/GlossaryXmlSerializer";
-import CustomXmlStorageService from "../services/CustomXmlStorageService";
-import { ID_SETTINGS_KEY, XMLNS } from "../utils/constants";
 import useStackStyles from "../common/Layout";
 import NewGlossary from "./NewGlossary";
-import { useGlossary } from "../context/glossaryContext";
+import { useGlossary, tryFetchGlossary } from "../context/glossaryContext";
 
 export interface AppProps {
   title: string;
@@ -20,24 +16,13 @@ export interface AppProps {
 export const App: FC<AppProps> = ({ title, isOfficeInitialized }) => {
   const {
     state: { glossary },
+    dispatch,
   } = useGlossary();
   const stackClasses = useStackStyles();
 
   useEffect(() => {
     if (isOfficeInitialized) {
-      const settings = Office.context.document.settings.get(ID_SETTINGS_KEY);
-      console.log("settings", settings);
-
-      const serializer = new GlossaryXmlSerializer(XMLNS);
-      const docStore = new CustomXmlStorageService(serializer);
-      docStore
-        .loadAsync()
-        .then((loadedGlossary) => {
-          setGlossary(loadedGlossary);
-        })
-        .catch((error) => {
-          console.error(error);
-        });
+      tryFetchGlossary(dispatch);
     }
   }, [isOfficeInitialized]);
 
