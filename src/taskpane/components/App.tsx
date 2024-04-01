@@ -5,6 +5,7 @@ import { MessageBar, MessageBarBody, MessageBarTitle, mergeClasses } from "@flue
 import useStackStyles from "../common/Layout";
 import NewGlossary from "./NewGlossary";
 import { useGlossary, tryFetchGlossary } from "../context/glossaryContext";
+import useAppStyles from "./App.style";
 
 export interface AppProps {
   isOfficeInitialized: boolean;
@@ -18,6 +19,7 @@ export const App: FC<AppProps> = ({ isOfficeInitialized }) => {
     dispatch,
   } = useGlossary();
   const stackClasses = useStackStyles();
+  const appStyles = useAppStyles();
 
   useEffect(() => {
     if (isOfficeInitialized) {
@@ -34,7 +36,7 @@ export const App: FC<AppProps> = ({ isOfficeInitialized }) => {
   }
 
   return (
-    <div>
+    <div className={stackClasses.stack}>
       <div className={stackClasses.stack}>
         <div className={mergeClasses(stackClasses.item, stackClasses.strech)}>ControlPanel comes here</div>
         <div className={mergeClasses(stackClasses.item, stackClasses.strech)}>Add edit form</div>
@@ -57,19 +59,21 @@ export const App: FC<AppProps> = ({ isOfficeInitialized }) => {
         )}
       </div>
       {glossary && (
-        <div className={stackClasses.stack}>
+        <div className={mergeClasses(stackClasses.stack, stackClasses.strech, appStyles.main)}>
           <div className={mergeClasses(stackClasses.item, stackClasses.strech)}>{JSON.stringify(glossary)}</div>
         </div>
       )}
 
-      <div className={stackClasses.stack}>
+      <div className={mergeClasses(stackClasses.stack, appStyles.messageBar)}>
         {notification && (
-          <MessageBar intent={notification.intent}>
-            <MessageBarBody>
-              <MessageBarTitle>Descriptive title</MessageBarTitle>
-              {notification.message}
-            </MessageBarBody>
-          </MessageBar>
+          <div className={stackClasses.item}>
+            <MessageBar intent={notification.intent}>
+              <MessageBarBody>
+                <MessageBarTitle>Descriptive title</MessageBarTitle>
+                {notification.message}
+              </MessageBarBody>
+            </MessageBar>
+          </div>
         )}
       </div>
     </div>

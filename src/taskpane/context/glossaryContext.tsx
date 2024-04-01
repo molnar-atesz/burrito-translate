@@ -26,7 +26,12 @@ const docStore = new CustomXmlStorageService(serializer);
 const glossaryReducer = (state: State, action: Action) => {
   switch (action.type) {
     case "create": {
-      return state.glossary ? { ...state } : { glossary: new Glossary(action.payload.source, action.payload.target) };
+      const glossary = new Glossary(action.payload.source, action.payload.target);
+      const notification: INotification = {
+        message: "Glossary created",
+        intent: "success",
+      };
+      return state.glossary ? { ...state } : { glossary, notification };
     }
     case "fetchStarted": {
       const notification: INotification = {
