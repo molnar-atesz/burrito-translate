@@ -1,6 +1,13 @@
 import { useEffect, FC } from "react";
 
-import { MessageBar, MessageBarBody, MessageBarTitle, mergeClasses } from "@fluentui/react-components";
+import {
+  Field,
+  MessageBar,
+  MessageBarBody,
+  MessageBarTitle,
+  mergeClasses,
+  ProgressBar,
+} from "@fluentui/react-components";
 
 import useStackStyles from "../common/Layout";
 import NewGlossary from "./NewGlossary";
@@ -15,20 +22,28 @@ export interface AppProps {
 
 export const App: FC<AppProps> = ({ isOfficeInitialized }) => {
   const {
-    state: { glossary, notification },
+    state: { isLoading, glossary, notification },
     dispatch,
   } = useGlossary();
   const stackClasses = useStackStyles();
   const appStyles = useAppStyles();
 
   useEffect(() => {
-    if (isOfficeInitialized) {
+    if (isOfficeInitialized && !isLoading) {
       tryFetchGlossary(dispatch);
     }
-  }, [isOfficeInitialized]);
+  }, [isOfficeInitialized, isLoading, dispatch]);
 
   if (!isOfficeInitialized) {
     return <>Please sideload your addin to see app body.</>;
+  }
+
+  if (isLoading) {
+    return (
+      <Field validationMessage="Loading glossary" validationState="none">
+        <ProgressBar />
+      </Field>
+    );
   }
 
   if (!glossary) {

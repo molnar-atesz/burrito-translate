@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { IGlossary, IGlossaryStore, IGlossaryXmlSerializer } from "../@types/glossary";
-import { ID_SETTINGS_KEY } from "../utils/constants";
+import { ID_SETTINGS_KEY, XMLNS } from "../utils/constants";
 
 /* global Office */
 
@@ -28,20 +28,21 @@ export default class CustomXmlStorageService implements IGlossaryStore {
 
   public loadAsync(): Promise<IGlossary> {
     return new Promise<IGlossary>((resolve, reject) => {
-      const id = Office.context.document.settings.get(ID_SETTINGS_KEY);
-      if (!id) {
-        return reject("No saved glossary found");
-      }
-
-      this.getByIdAsync(id).then((asyncResult) => {
-        if (!asyncResult.value) {
-          return reject("Previously saved glossary not found");
+      Office.context.document.customXmlParts.getByNamespaceAsync(
+        XMLNS,
+        (asyncResult: Office.AsyncResult<Office.CustomXmlPart[]>) => {
+          if (asyncResult.error) {
+            console.error(asyncResult.error);
+            return reject("Previously saved glossary not found");
+          }
+          const xmlParts = asyncResult.value;
+          // TODO: how to handle multiple previously saved glossary
+          xmlParts[0].getXmlAsync((xml) => {
+            const glossary = this.serializer.deserialize(xml.value);
+            return resolve(glossary);
+          });
         }
-        this.getXmlAsync(asyncResult.value).then((xml) => {
-          const glossary = this.serializer.deserialize(xml);
-          return resolve(glossary);
-        });
-      });
+      );
     });
   }
 
@@ -62,22 +63,6 @@ export default class CustomXmlStorageService implements IGlossaryStore {
       } else {
         resolve();
       }
-    });
-  }
-
-  private getByIdAsync(id: string): Promise<Office.AsyncResult<Office.CustomXmlPart>> {
-    return new Promise<Office.AsyncResult<Office.CustomXmlPart>>((resolve, _) => {
-      Office.context.document.customXmlParts.getByIdAsync(id, (result: Office.AsyncResult<Office.CustomXmlPart>) => {
-        return resolve(result);
-      });
-    });
-  }
-
-  private getXmlAsync(xmlPart: Office.CustomXmlPart): Promise<string> {
-    return new Promise<string>((resolve, _) => {
-      xmlPart.getXmlAsync((result: Office.AsyncResult<any>) => {
-        return resolve(result.value);
-      });
     });
   }
 }
