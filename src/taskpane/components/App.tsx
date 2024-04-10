@@ -13,6 +13,7 @@ import useStackStyles from "../common/Layout";
 import NewGlossary from "./NewGlossary";
 import { useGlossary, tryFetchGlossary } from "../context/glossaryContext";
 import useAppStyles from "./App.style";
+import GlossaryTable from "./GlossaryTable";
 
 export interface AppProps {
   isOfficeInitialized: boolean;
@@ -75,7 +76,9 @@ export const App: FC<AppProps> = ({ isOfficeInitialized }) => {
       </div>
       {glossary && (
         <div className={mergeClasses(stackClasses.stack, stackClasses.strech, appStyles.main)}>
-          <div className={mergeClasses(stackClasses.item, stackClasses.strech)}>{JSON.stringify(glossary)}</div>
+          <div className={mergeClasses(stackClasses.item, stackClasses.strech)}>
+            <GlossaryTable items={glossary.items} source={glossary.source.name} target={glossary.target.name} />
+          </div>
         </div>
       )}
 
@@ -84,8 +87,7 @@ export const App: FC<AppProps> = ({ isOfficeInitialized }) => {
           <div className={stackClasses.item}>
             <MessageBar intent={notification.intent}>
               <MessageBarBody>
-                <MessageBarTitle>Descriptive title</MessageBarTitle>
-                {notification.message}
+                <MessageBarTitle>{notification.message}</MessageBarTitle>
               </MessageBarBody>
             </MessageBar>
           </div>

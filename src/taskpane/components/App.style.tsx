@@ -4,7 +4,8 @@ const useAppStyles = makeStyles({
   messageBar: {
     ...shorthands.padding("10px"),
     justifyContent: "center",
-    alignSelf: "end",
+    position: "sticky",
+    bottom: "10px",
   },
   main: {
     height: "100%",
