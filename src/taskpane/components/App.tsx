@@ -14,6 +14,7 @@ import NewGlossary from "./NewGlossary";
 import { useGlossary, tryFetchGlossary } from "../context/glossaryContext";
 import useAppStyles from "./App.style";
 import GlossaryTable from "./GlossaryTable";
+import GlossaryItemForm from "./GlossaryItemForm";
 
 export interface AppProps {
   isOfficeInitialized: boolean;
@@ -54,9 +55,9 @@ export const App: FC<AppProps> = ({ isOfficeInitialized }) => {
   return (
     <div className={stackClasses.stack}>
       <div className={stackClasses.stack}>
-        <div className={mergeClasses(stackClasses.item, stackClasses.strech)}>ControlPanel comes here</div>
-        <div className={mergeClasses(stackClasses.item, stackClasses.strech)}>Add edit form</div>
-        <div className={mergeClasses(stackClasses.item, stackClasses.center)}>Import CSV form</div>
+        <div className={mergeClasses(stackClasses.item, stackClasses.strech)}>
+          <GlossaryItemForm />
+        </div>
 
         {!glossary && (
           <div className={mergeClasses(stackClasses.item, stackClasses.center)}>

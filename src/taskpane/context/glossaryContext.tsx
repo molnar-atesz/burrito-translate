@@ -12,7 +12,7 @@ type Action =
   | { type: "fetchStarted" }
   | { type: "fetchFinished"; glossary: IGlossary }
   | { type: "fetchFailed"; error: Error }
-  | { type: "addItem" };
+  | { type: "saveItem"; payload: { item: IGlossaryItem } };
 
 type Dispatch = (action: Action) => void;
 
@@ -69,6 +69,24 @@ const glossaryReducer = (state: State, action: Action) => {
         intent: "error",
       };
       return { glossary: undefined, notification, isLoading: false };
+    }
+    case "saveItem": {
+      const normalizedItem: IGlossaryItem = {
+        original: action.payload.item.original.trim(),
+        translation: action.payload.item.translation.trim(),
+        note: action.payload.item.note?.trim(),
+      };
+      if (normalizedItem.original.length === 0) {
+        return {
+          ...state,
+          notification: {
+            message: "Original word should not be empty",
+            intent: "error",
+          },
+        };
+      }
+      state.glossary?.addItem(normalizedItem);
+      return { ...state, glossary: state.glossary };
     }
     default: {
       throw new Error(`Unhandled action type: ${action.type}`);
