@@ -1,9 +1,10 @@
 import React, { createContext, useContext, useReducer } from "react";
-import { IGlossary, INotification } from "../@types/glossary";
+import { IGlossary, IGlossaryItem, INotification } from "../@types/glossary";
 import { Glossary, Language } from "../models";
 import { XMLNS } from "../utils/constants";
 import GlossaryXmlSerializer from "../utils/GlossaryXmlSerializer";
 import CustomXmlStorageService from "../services/CustomXmlStorageService";
+import DocumentService from "../services/DocumentService";
 
 type Action =
   | { type: "create"; payload: { source: Language; target: Language } }
@@ -32,6 +33,7 @@ type GlossaryProviderProps = { children: React.ReactNode };
 const GlossaryContext = createContext<{ state: State; dispatch: Dispatch } | undefined>(undefined);
 const serializer = new GlossaryXmlSerializer(XMLNS);
 const docStore = new CustomXmlStorageService(serializer);
+const documenService = new DocumentService();
 
 const glossaryReducer = (state: State, action: Action) => {
   switch (action.type) {
@@ -83,6 +85,10 @@ const tryFetchGlossary = async (dispatch: Dispatch) => {
   }
 };
 
+const insertText = async (item: IGlossaryItem): Promise<boolean> => {
+  return await documenService.insertText(item.translation);
+};
+
 const GlossaryProvider = ({ children }: GlossaryProviderProps) => {
   const [state, dispatch] = useReducer(glossaryReducer, initialState);
   // NOTE: you *might* need to memoize this value
@@ -100,4 +106,4 @@ const useGlossary = () => {
   return context;
 };
 
-export { GlossaryProvider, useGlossary, tryFetchGlossary };
+export { GlossaryProvider, useGlossary, tryFetchGlossary, insertText };

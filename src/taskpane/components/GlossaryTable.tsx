@@ -13,6 +13,7 @@ import {
   createTableColumn,
 } from "@fluentui/react-components";
 import useGlossaryTableStyle from "./GlossaryTable.style";
+import { insertText } from "../context/glossaryContext";
 
 export interface IGlossaryTableProps {
   source: string;
@@ -42,6 +43,7 @@ const getColumns = (source: string, target: string): TableColumnDefinition<IGlos
 
 const GlossaryTable = (props: IGlossaryTableProps) => {
   const styles = useGlossaryTableStyle();
+
   return (
     <DataGrid
       items={props.items}
@@ -59,7 +61,7 @@ const GlossaryTable = (props: IGlossaryTableProps) => {
       </DataGridHeader>
       <DataGridBody<IGlossaryItem>>
         {({ item, rowId }) => (
-          <DataGridRow<IGlossaryItem> key={rowId}>
+          <DataGridRow<IGlossaryItem> key={rowId} onClick={() => insertText(item)}>
             {({ renderCell }) => <DataGridCell>{renderCell(item)}</DataGridCell>}
           </DataGridRow>
         )}
