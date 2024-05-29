@@ -7,6 +7,8 @@ import {
   MessageBarTitle,
   mergeClasses,
   ProgressBar,
+  MessageBarActions,
+  Button,
 } from "@fluentui/react-components";
 
 import useStackStyles from "../common/Layout";
@@ -15,6 +17,7 @@ import { useGlossary, tryFetchGlossary } from "../context/glossaryContext";
 import useAppStyles from "./App.style";
 import GlossaryTable from "./GlossaryTable";
 import GlossaryItemForm from "./GlossaryItemForm";
+import { DismissRegular } from "@fluentui/react-icons";
 
 export interface AppProps {
   isOfficeInitialized: boolean;
@@ -35,6 +38,12 @@ export const App: FC<AppProps> = ({ isOfficeInitialized }) => {
       tryFetchGlossary(dispatch);
     }
   }, [isOfficeInitialized, isLoading, dispatch]);
+
+  const clearNotification = () => {
+    dispatch({
+      type: "clearNotification",
+    });
+  };
 
   if (!isOfficeInitialized) {
     return <>Please sideload your addin to see app body.</>;
@@ -90,6 +99,16 @@ export const App: FC<AppProps> = ({ isOfficeInitialized }) => {
               <MessageBarBody>
                 <MessageBarTitle>{notification.message}</MessageBarTitle>
               </MessageBarBody>
+              <MessageBarActions
+                containerAction={
+                  <Button
+                    aria-label="dismiss"
+                    appearance="transparent"
+                    icon={<DismissRegular />}
+                    onClick={clearNotification}
+                  />
+                }
+              ></MessageBarActions>
             </MessageBar>
           </div>
         )}

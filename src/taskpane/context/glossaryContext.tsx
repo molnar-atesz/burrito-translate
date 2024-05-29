@@ -7,6 +7,7 @@ import CustomXmlStorageService from "../services/CustomXmlStorageService";
 import DocumentService from "../services/DocumentService";
 
 type Action =
+  | { type: "clearNotification" }
   | { type: "create"; payload: { source: Language; target: Language } }
   | { type: "fetch" }
   | { type: "fetchStarted" }
@@ -37,6 +38,9 @@ const documenService = new DocumentService();
 
 const glossaryReducer = (state: State, action: Action) => {
   switch (action.type) {
+    case "clearNotification": {
+      return { ...state, notification: null };
+    }
     case "create": {
       const glossary = new Glossary(action.payload.source, action.payload.target);
       const notification: INotification = {
