@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import { useId, Label, Input, Button, Field } from "@fluentui/react-components";
+import { useId, Input, Button, Field } from "@fluentui/react-components";
 
 import { IGlossaryItem } from "../@types/glossary";
 import { useGlossary } from "../context/glossaryContext";
@@ -10,10 +10,10 @@ import useGlossaryItemFormStyles from "./GlossaryItemForm.style";
 export type GlossaryItemFormProps = {
   item?: IGlossaryItem;
   onSubmit?: () => void;
-  onCancel?: () => void;
+  onFinish?: () => void;
 };
 
-const GlossaryItemForm = ({ item, onCancel }: GlossaryItemFormProps) => {
+const GlossaryItemForm = ({ item, onFinish }: GlossaryItemFormProps) => {
   const { dispatch } = useGlossary();
 
   const [originalValue, setOriginalValue] = useState<string>(item?.original ?? "");
@@ -37,6 +37,22 @@ const GlossaryItemForm = ({ item, onCancel }: GlossaryItemFormProps) => {
         },
       },
     });
+    if (onFinish) {
+      onFinish();
+    }
+  };
+
+  const resetForm = () => {
+    setNoteValue(null);
+    setOriginalValue("");
+    setTranslationValue("");
+  };
+
+  const handleCancel = () => {
+    resetForm();
+    if (onFinish) {
+      onFinish();
+    }
   };
 
   return (
@@ -58,7 +74,7 @@ const GlossaryItemForm = ({ item, onCancel }: GlossaryItemFormProps) => {
         <Button appearance="primary" onClick={handleSubmit}>
           Submit
         </Button>
-        <Button onClick={onCancel}>Cancel</Button>
+        <Button onClick={handleCancel}>Cancel</Button>
       </div>
     </div>
   );

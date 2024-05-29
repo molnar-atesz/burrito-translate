@@ -6,7 +6,7 @@ import GlossaryXmlSerializer from "../utils/GlossaryXmlSerializer";
 import CustomXmlStorageService from "../services/CustomXmlStorageService";
 import DocumentService from "../services/DocumentService";
 
-type Action =
+type GlossaryAction =
   | { type: "clearNotification" }
   | { type: "create"; payload: { source: Language; target: Language } }
   | { type: "fetch" }
@@ -16,15 +16,15 @@ type Action =
   | { type: "saveItem"; payload: { item: IGlossaryItem } }
   | { type: "deleteItem"; payload: { item: IGlossaryItem } };
 
-type Dispatch = (action: Action) => void;
+type Dispatch = (action: GlossaryAction) => void;
 
-export type State = {
+export interface State {
   glossary?: IGlossary;
   notification?: INotification;
   isLoading: boolean;
-};
+}
 
-const initialState = {
+const initialState: State = {
   glossary: undefined,
   isLoading: false,
   notification: undefined,
@@ -37,10 +37,10 @@ const serializer = new GlossaryXmlSerializer(XMLNS);
 const docStore = new CustomXmlStorageService(serializer);
 const documenService = new DocumentService();
 
-const glossaryReducer = (state: State, action: Action) => {
+const glossaryReducer = (state: State, action: GlossaryAction): State => {
   switch (action.type) {
     case "clearNotification": {
-      return { ...state, notification: null };
+      return { ...state, notification: undefined };
     }
     case "create": {
       const glossary = new Glossary(action.payload.source, action.payload.target);
@@ -120,6 +120,7 @@ const insertText = async (item: IGlossaryItem): Promise<boolean> => {
   return await documenService.insertText(item.translation);
 };
 
+// TODO: check proper TS usage with reducer: https://dev.to/elisealcala/react-context-with-usereducer-and-typescript-4obm#fromHistory
 const GlossaryProvider = ({ children }: GlossaryProviderProps) => {
   const [state, dispatch] = useReducer(glossaryReducer, initialState);
   // NOTE: you *might* need to memoize this value

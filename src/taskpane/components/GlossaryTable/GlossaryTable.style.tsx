@@ -2,6 +2,7 @@ import { makeStyles, shorthands } from "@fluentui/react-components";
 
 const useGlossaryTableStyle = makeStyles({
   header: {
+    zIndex: "100",
     position: "sticky",
     top: "0px",
   },

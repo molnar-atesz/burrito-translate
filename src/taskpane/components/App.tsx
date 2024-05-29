@@ -90,7 +90,7 @@ export const App: FC<AppProps> = ({ isOfficeInitialized }) => {
       <Divider />
       {formIsOpen && (
         <div className={mergeClasses(stackClasses.item, stackClasses.strech)}>
-          <GlossaryItemForm onCancel={() => setFormIsOpen(false)} />
+          <GlossaryItemForm onFinish={() => setFormIsOpen(false)} />
         </div>
       )}
       {glossary && (
