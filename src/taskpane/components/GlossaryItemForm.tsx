@@ -10,9 +10,10 @@ import useGlossaryItemFormStyles from "./GlossaryItemForm.style";
 export type GlossaryItemFormProps = {
   item?: IGlossaryItem;
   onSubmit?: () => void;
+  onCancel?: () => void;
 };
 
-const GlossaryItemForm = ({ item }: GlossaryItemFormProps) => {
+const GlossaryItemForm = ({ item, onCancel }: GlossaryItemFormProps) => {
   const { dispatch } = useGlossary();
 
   const [originalValue, setOriginalValue] = useState<string>(item?.original ?? "");
@@ -57,7 +58,7 @@ const GlossaryItemForm = ({ item }: GlossaryItemFormProps) => {
         <Button appearance="primary" onClick={handleSubmit}>
           Submit
         </Button>
-        <Button>Cancel</Button>
+        <Button onClick={onCancel}>Cancel</Button>
       </div>
     </div>
   );

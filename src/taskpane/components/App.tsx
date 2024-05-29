@@ -1,4 +1,4 @@
-import { useEffect, FC } from "react";
+import { useEffect, FC, useState } from "react";
 
 import {
   Field,
@@ -9,6 +9,9 @@ import {
   ProgressBar,
   MessageBarActions,
   Button,
+  Toolbar,
+  ToolbarButton,
+  Divider,
 } from "@fluentui/react-components";
 
 import useStackStyles from "../common/Layout";
@@ -17,7 +20,7 @@ import { useGlossary, tryFetchGlossary } from "../context/glossaryContext";
 import useAppStyles from "./App.style";
 import GlossaryTable from "./GlossaryTable";
 import GlossaryItemForm from "./GlossaryItemForm";
-import { DismissRegular } from "@fluentui/react-icons";
+import { AddRegular, ArrowExportRegular, ArrowImportRegular, DismissRegular } from "@fluentui/react-icons";
 
 export interface AppProps {
   isOfficeInitialized: boolean;
@@ -32,12 +35,17 @@ export const App: FC<AppProps> = ({ isOfficeInitialized }) => {
   } = useGlossary();
   const stackClasses = useStackStyles();
   const appStyles = useAppStyles();
+  const [formIsOpen, setFormIsOpen] = useState<boolean>(false);
 
   useEffect(() => {
     if (isOfficeInitialized && !isLoading) {
       tryFetchGlossary(dispatch);
     }
   }, [isOfficeInitialized, isLoading, dispatch]);
+
+  const toggleFormVisibility = () => {
+    setFormIsOpen(!formIsOpen);
+  };
 
   const clearNotification = () => {
     dispatch({
@@ -63,27 +71,38 @@ export const App: FC<AppProps> = ({ isOfficeInitialized }) => {
 
   return (
     <div className={stackClasses.stack}>
-      <div className={stackClasses.stack}>
+      <Toolbar>
+        <ToolbarButton
+          aria-label="Add new word"
+          appearance="subtle"
+          icon={<AddRegular />}
+          onClick={toggleFormVisibility}
+        >
+          Word
+        </ToolbarButton>
+        <ToolbarButton aria-label="Import CSV" appearance="subtle" icon={<ArrowImportRegular />}>
+          Import
+        </ToolbarButton>
+        <ToolbarButton aria-label="Export CSV" appearance="subtle" icon={<ArrowExportRegular />}>
+          Export
+        </ToolbarButton>
+      </Toolbar>
+      <Divider />
+      {formIsOpen && (
         <div className={mergeClasses(stackClasses.item, stackClasses.strech)}>
-          <GlossaryItemForm />
+          <GlossaryItemForm onCancel={() => setFormIsOpen(false)} />
         </div>
-
-        {!glossary && (
-          <div className={mergeClasses(stackClasses.item, stackClasses.center)}>
-            <NewGlossary />
+      )}
+      {glossary && (
+        <>
+          <div className={mergeClasses(stackClasses.item, stackClasses.center, stackClasses.verticalFill)}>
+            <h2 className="ms-font-xl ms-fontWeight-semilight ms-fontColor-neutralPrimary ms-u-slideUpIn20">
+              Glossary
+            </h2>
           </div>
-        )}
-        {glossary && (
-          <>
-            <div className={mergeClasses(stackClasses.item, stackClasses.center, stackClasses.verticalFill)}>
-              <h2 className="ms-font-xl ms-fontWeight-semilight ms-fontColor-neutralPrimary ms-u-slideUpIn20">
-                Glossary
-              </h2>
-            </div>
-            <div className={mergeClasses(stackClasses.item, stackClasses.strech)}>Search field comes here</div>
-          </>
-        )}
-      </div>
+          <div className={mergeClasses(stackClasses.item, stackClasses.strech)}>Search field comes here</div>
+        </>
+      )}
       {glossary && (
         <div className={mergeClasses(stackClasses.stack, stackClasses.strech, appStyles.main)}>
           <div className={mergeClasses(stackClasses.item, stackClasses.strech)}>
