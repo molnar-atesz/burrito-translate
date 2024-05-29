@@ -18,7 +18,7 @@ import useStackStyles from "../common/Layout";
 import NewGlossary from "./NewGlossary";
 import { useGlossary, tryFetchGlossary } from "../context/glossaryContext";
 import useAppStyles from "./App.style";
-import GlossaryTable from "./GlossaryTable";
+import GlossaryTable from "./GlossaryTable/GlossaryTable";
 import GlossaryItemForm from "./GlossaryItemForm";
 import { AddRegular, ArrowExportRegular, ArrowImportRegular, DismissRegular } from "@fluentui/react-icons";
 
@@ -80,10 +80,10 @@ export const App: FC<AppProps> = ({ isOfficeInitialized }) => {
         >
           Word
         </ToolbarButton>
-        <ToolbarButton aria-label="Import CSV" appearance="subtle" icon={<ArrowImportRegular />}>
+        <ToolbarButton aria-label="Import from CSV" appearance="subtle" icon={<ArrowImportRegular />}>
           Import
         </ToolbarButton>
-        <ToolbarButton aria-label="Export CSV" appearance="subtle" icon={<ArrowExportRegular />}>
+        <ToolbarButton aria-label="Export to CSV" appearance="subtle" icon={<ArrowExportRegular />}>
           Export
         </ToolbarButton>
       </Toolbar>

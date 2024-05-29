@@ -9,6 +9,13 @@ const useGlossaryTableStyle = makeStyles({
     fontWeight: "bold",
     ...shorthands.padding("5px"),
   },
+  itemSourceCell: {
+    width: "100%",
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
 });
 
 export default useGlossaryTableStyle;

@@ -1,5 +1,5 @@
 import React from "react";
-import { IGlossaryItem } from "../@types/glossary";
+import { IGlossaryItem } from "../../@types/glossary";
 
 import {
   DataGridBody,
@@ -8,12 +8,12 @@ import {
   DataGridHeader,
   DataGridHeaderCell,
   DataGridCell,
-  TableCellLayout,
   TableColumnDefinition,
   createTableColumn,
 } from "@fluentui/react-components";
 import useGlossaryTableStyle from "./GlossaryTable.style";
-import { insertText } from "../context/glossaryContext";
+import { insertText } from "../../context/glossaryContext";
+import ItemSourceCell from "./ItemSourceCell";
 
 export interface IGlossaryTableProps {
   source: string;
@@ -26,7 +26,7 @@ const getColumns = (source: string, target: string): TableColumnDefinition<IGlos
     columnId: "original",
     compare: (a, b) => a.original.localeCompare(b.original),
     renderHeaderCell: () => `From ${source}`,
-    renderCell: (item) => item.original,
+    renderCell: (item) => <ItemSourceCell item={item} />,
   }),
   createTableColumn<IGlossaryItem>({
     columnId: "translation",
@@ -37,7 +37,7 @@ const getColumns = (source: string, target: string): TableColumnDefinition<IGlos
   createTableColumn<IGlossaryItem>({
     columnId: "note",
     renderHeaderCell: () => "Note",
-    renderCell: (item) => item.note,
+    renderCell: (item) => "actions col",
   }),
 ];
 
