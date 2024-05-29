@@ -16,6 +16,12 @@ const useGlossaryTableStyle = makeStyles({
     justifyContent: "space-between",
     alignItems: "center",
   },
+  actionCell: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "flex-start",
+    ...shorthands.gap("5px"),
+  },
 });
 
 export default useGlossaryTableStyle;

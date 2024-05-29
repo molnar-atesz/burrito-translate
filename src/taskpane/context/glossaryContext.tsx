@@ -13,7 +13,8 @@ type Action =
   | { type: "fetchStarted" }
   | { type: "fetchFinished"; glossary: IGlossary }
   | { type: "fetchFailed"; error: Error }
-  | { type: "saveItem"; payload: { item: IGlossaryItem } };
+  | { type: "saveItem"; payload: { item: IGlossaryItem } }
+  | { type: "deleteItem"; payload: { item: IGlossaryItem } };
 
 type Dispatch = (action: Action) => void;
 
@@ -90,6 +91,14 @@ const glossaryReducer = (state: State, action: Action) => {
         };
       }
       state.glossary?.addItem(normalizedItem);
+      return { ...state, glossary: state.glossary };
+    }
+    case "deleteItem": {
+      try {
+        state.glossary?.deleteItem(action.payload.item.original);
+      } catch (error) {
+        console.log("error during delete", error);
+      }
       return { ...state, glossary: state.glossary };
     }
     default: {

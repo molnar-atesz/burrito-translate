@@ -14,6 +14,7 @@ import {
 import useGlossaryTableStyle from "./GlossaryTable.style";
 import { insertText } from "../../context/glossaryContext";
 import ItemSourceCell from "./ItemSourceCell";
+import ActionCell from "./ActionCell";
 
 export interface IGlossaryTableProps {
   source: string;
@@ -37,7 +38,7 @@ const getColumns = (source: string, target: string): TableColumnDefinition<IGlos
   createTableColumn<IGlossaryItem>({
     columnId: "note",
     renderHeaderCell: () => "Note",
-    renderCell: (item) => "actions col",
+    renderCell: (item) => <ActionCell item={item} />,
   }),
 ];
 
@@ -61,7 +62,7 @@ const GlossaryTable = (props: IGlossaryTableProps) => {
       </DataGridHeader>
       <DataGridBody<IGlossaryItem>>
         {({ item, rowId }) => (
-          <DataGridRow<IGlossaryItem> key={rowId} onClick={() => insertText(item)}>
+          <DataGridRow<IGlossaryItem> key={rowId}>
             {({ renderCell }) => <DataGridCell>{renderCell(item)}</DataGridCell>}
           </DataGridRow>
         )}
